@@ -22,8 +22,8 @@ var getOne = function() {
 
 //获取今天的天气
 var getWeather = function() {
-  let province = configList.lxq.province;
-  let city = configList.lxq.city;
+  let province = configList.lrq.province;
+  let city = configList.lrq.city;
   let url = "http://tianqi.moji.com/weather/china/" + province + "/" + city;
   console.log(url);
   return axios.get(url)
@@ -103,14 +103,14 @@ Promise.all([getOne(), getWeather(), getYdWord()]).then(()=>{
   console.log(str);
   let authCode = configList.lrq.authCode;
   let url = "https://sc.ftqq.com/" + authCode + ".send";
-  // axios.post(url,
-  //   qs.stringify({
-  //     "text": "今日的推送已到达!",
-  //     "desp": str
-  //   }))
-  // .then((res)=>{
-  //   console.log(res.data)
-  // })
+  axios.post(url,
+    qs.stringify({
+      "text": "今日的推送已到达!",
+      "desp": str
+    }))
+  .then((res)=>{
+    console.log(res.data)
+  })
 })
 
 
