@@ -1,8 +1,9 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
 const qs = require('qs')
+const {configList} = require('./config')
 
-var words = [];
+const words = [];   //爬下来的内容都在里面
 
 //获取"一个"是今天的句子
 var getOne = function() {
@@ -21,22 +22,32 @@ var getOne = function() {
 
 //获取今天的天气
 var getWeather = function() {
-  return axios.get("http://tianqi.moji.com/weather/china/beijing/haidian-district")
+  let province = configList.lxq.province;
+  let city = configList.lxq.city;
+  let url = "http://tianqi.moji.com/weather/china/" + province + "/" + city;
+  console.log(url);
+  return axios.get(url)
   .then(res=>{
     let $ = cheerio.load(res.data);
+
     let today = $('.days')[0];  //第0位是今天的天气
     let weatherState = today.children[3].children[2].data.trim(); //今天晴还是多云
     let temp = today.children[5].children[0].data;                //获取今天的温度
     let windDir = today.children[7].children[1].children[0].data; //获取今天的风向
     let windSpeed = today.children[7].children[3].children[0].data; //获取今天的风速
     let air = today.children[9].children[0].children[0].data.trim();  //获取今天的空气
+    let wea_about = $('.wea_about')[0].children[1].children[0].data;  //湿度
+    let wea_tips = $('.wea_tips')[0].children[3].children[0].data;    //天气提示
+
 
     let weather = {
       weatherState: weatherState,
       temp: temp,
       windDir: windDir,
       windSpeed: windSpeed,
-      air: air
+      air: air,
+      humi: wea_about.split(" ")[1],    //抓取出来的湿度格式是 "湿度 10%"  做一下处理，与温度一致
+      tips: wea_tips
     }
     words["weather"] = weather;
     console.log("今天的天气爬取完毕");
@@ -68,10 +79,12 @@ var dealWords = function(words) {
   let ydWord = words["ydWord"];
 
   //添加天气情况
-  ret = "天气: " + weather.weatherState + " \r\n\r\n " +
-        "温度: " + weather.temp + " \r\n\r\n " + 
-        "风风: " + weather.windDir + " " + weather.windSpeed + " \r\n\r\n " + 
-        "空气质量: " + weather.air + " \r\n\r\n";
+  ret = "天气: " + weather.weatherState + " \r\n\r\n" +
+        "温度: " + weather.temp + " \r\n\r\n" + 
+        "湿度: " + weather.humi + " \r\n\r\n" + 
+        "风风: " + weather.windDir + " " + weather.windSpeed + " \r\n\r\n" + 
+        "空气质量: " + weather.air + " \r\n\r\n" + 
+        "温馨提示:" + weather.tips + " \r\n\r\n";
   //添加one
   ret = ret + 
         "the one: " + one.text + " \r\n\r\n";
@@ -88,15 +101,16 @@ var dealWords = function(words) {
 Promise.all([getOne(), getWeather(), getYdWord()]).then(()=>{
   let str = dealWords(words);
   console.log(str);
-
-  axios.post("https://sc.ftqq.com/SCU69765T7313a13dbabe2d1e7ed0b9aec63b691b5dfb3a8f3e2fb.send",
-    qs.stringify({
-      "text": "今日的推送已到达!",
-      "desp": str
-    }))
-  .then((res)=>{
-    console.log(res.data)
-  })
+  let authCode = configList.lrq.authCode;
+  let url = "https://sc.ftqq.com/" + authCode + ".send";
+  // axios.post(url,
+  //   qs.stringify({
+  //     "text": "今日的推送已到达!",
+  //     "desp": str
+  //   }))
+  // .then((res)=>{
+  //   console.log(res.data)
+  // })
 })
 
 
