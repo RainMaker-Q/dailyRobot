@@ -1,7 +1,7 @@
-const axios = require('axios')
-const cheerio = require('cheerio')
+const axios = require('axios')        
+const cheerio = require('cheerio')    //作用和jqery一样
 const qs = require('qs')
-const showdown = require('showdown')
+const showdown = require('showdown')  //markdown转换为html
 
 const {configList} = require('./config')
 const {sendEmail} = require('./sendEmail')
@@ -151,11 +151,4 @@ var sendMsg = function(sb) {
 
 
 sendMsg(configList.lxq);
-
-
-
-
-
-
-
 
