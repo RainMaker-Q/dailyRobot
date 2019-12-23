@@ -1,9 +1,9 @@
 # dailyRobot
 爬取墨迹天气、一个、有道词典的每日一句，通过server酱发送给相应的微信，发送邮件给相应的用户。  
 微信效果图如下：  
-![微信效果图](https://github.com/LRQLRQ/picture/blob/master/%E5%BE%AE%E4%BF%A1%E6%95%88%E6%9E%9C%E5%9B%BE.png?raw=true)
+![微信效果图](https://github.com/LRQLRQ/picture/blob/master/wechatRobotPic.png?raw=true)  
 邮件效果图如下：  
-![邮件效果图](https://raw.githubusercontent.com/LRQLRQ/picture/master/%E9%82%AE%E4%BB%B6%E6%95%88%E6%9E%9C%E5%9B%BE.png)
+![邮件效果图](https://github.com/LRQLRQ/picture/blob/master/emailRobotPic.png?raw=true)
 
 ## 前言
 去年刚开始接触node，在网上找到一个每天定时给女朋友发消息的代码，开始用了一段时间，也没好好看代码。当时只是觉得能写出这种功能应该很NB。最近看了很多基础的知识，对前端有了更多的认识，js也了解的更深入了，就自己动手做了一个。花了一天半吧，还是很有激情的，哈哈。
