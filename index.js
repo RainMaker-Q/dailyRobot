@@ -163,7 +163,7 @@ var sendMsg = function(sb, words) {
  *定时任务
  *秒 分 时 日 月 周
 */
-schedule.scheduleJob('00 33 10 * * *', function() {
+schedule.scheduleJob('00 20 05 * * *', function() {
   
   configList.forEach((person)=> {
     let words = [];
