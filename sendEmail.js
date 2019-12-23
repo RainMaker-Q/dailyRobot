@@ -8,15 +8,15 @@ async function main(md2htmlStr, emailBox) {
     port: 465,               //SMTP端口
     secure: true,            // true for 465, false for other ports
     auth: {
-      user: "**@qq.com", // 发送邮箱
-      pass: "**" //  邮箱的授权码
+      user: "651577562@qq.com", // 发送邮箱
+      pass: "rpoargxsuacfbdig" //  邮箱的授权码
     }
   });
 
   let info = await transporter.sendMail({
-    from: '"Rain 👻" <**@qq.com>', // 是发送的邮箱
+    from: '"Rain 👻" <651577562@qq.com>', // 是发送的邮箱
     to: emailBox,                         // 接收的邮箱，可以填写多个，用逗号隔开
-    subject: "Today is a New Day",        // 邮件的主题
+    subject: "今天有个好心情！",        // 邮件的主题
     text: "Here ...",                     // 没用。。
     html: md2htmlStr                      // html的内容
   });

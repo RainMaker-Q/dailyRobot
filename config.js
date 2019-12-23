@@ -5,10 +5,11 @@
 * server酱的码、接收的邮箱（如果isSend选项是false的话，就不发送）
 */
 
-var configList = {
-  lrq: {
+var configList = [
+  {
     province: "beijing",
     city: "haidian-district",
+    extraWord: "今天，又是充满希望的一天！",    //在title想说的话
     serverChan: {
       isSend: true,
       authCode: "SCU69765T7313a13dbabe2d1e7ed0b9aec63b691b5dfb3a8f3e2fb"
@@ -19,20 +20,21 @@ var configList = {
       // biggfish3147@163.com
     }
   },
-  lxq: {
+  {
     province: "heilongjiang",
     city: "harbin",
+    extraWord: "早上好啊，sweet heart~",
     serverChan: {
       isSend: false,
       authCode: "123"
     },
     email: {
       isSend: true,
-      // emailBox: "lrq@bupt.edu.cn"  //调试使用
-      emailBox: "lxq_emai@163.com"
+      emailBox: "lrq@bupt.edu.cn"  //调试使用
+      // emailBox: "lxq_emai@163.com"
     }
   }
-}
+]
 
 
 

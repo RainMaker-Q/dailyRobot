@@ -2,15 +2,16 @@ const axios = require('axios')
 const cheerio = require('cheerio')    //作用和jqery一样
 const qs = require('qs')
 const showdown = require('showdown')  //markdown转换为html
+const schedule = require('node-schedule')
 
 const {configList} = require('./config')
 const {sendEmail} = require('./sendEmail')
 
-const words = [];   //爬下来的内容都在里面
+// const words = [];   //爬下来的内容都在里面
 
 //获取"一个"是今天的句子
-var getOne = function() {
-  return axios.get("http://wufazhuce.com/")
+var getOne = function(words) {
+  return axios.get("http://wufazhuce.com/")   //one的官网，爬取今天的一句
   .then(function(res) {
     let $ = cheerio.load(res.data);
     var one_text = $('.fp-one-cita a')[0].children[0].data;   //一个的今日一句
@@ -24,9 +25,8 @@ var getOne = function() {
 }
 
 //获取今天的天气
-var getWeather = function(province, city) {
-  // let province = configList.lrq.province;
-  // let city = configList.lrq.city;
+var getWeather = function(province, city, words) {
+ 
   let url = "http://tianqi.moji.com/weather/china/" + province + "/" + city;
   console.log(url);
   return (
@@ -58,7 +58,7 @@ var getWeather = function(province, city) {
 }
 
 //获取有道词典的每日一句
-var getYdWord = function() {
+var getYdWord = function(words) {
   return axios.get("http://dict.youdao.com/infoline/style/cardList?style=daily&apiversion=3.0&client=mobile")
           .then(res=> {
             let todayData = res.data[0];  //要今天的
@@ -82,20 +82,27 @@ var dealWords = function(words, forWho="serverChan") {
   let weather = words["weather"];
   let one = words["one"];
   let ydWord = words["ydWord"];
+  let extraWord = words["extraWord"]
   let nextLine = "";
 
   let date = new Date();
-  let dataStr = "**" + date.getFullYear() +  "."
+  let dataStr =  date.getFullYear() +  "."
                    + (date.getMonth()+1) + "."
                    + date.getDate();
 
 
   if(forWho=="serverChan") {
     nextLine = " \r\n\r\n";   //这个在微信中显示是换行，应该是它内部处理过
-    dataStr += "**" + nextLine + nextLine;
+    dataStr = "<h3>" + extraWord + "<h3/>"
+              + "**" + dataStr + "**"
+              + nextLine
+              + "<hr/>";
   } else if(forWho=="email") {
     nextLine = "<br/>"        //标准的markdown
-    dataStr += "**" + nextLine + nextLine;
+    dataStr = "<h3>" + extraWord + "<h3/>"
+              + "**" + dataStr + "**" 
+              + nextLine 
+              + "<hr/>";
   }
   //添加天气情况
   ret = dataStr +
@@ -104,26 +111,29 @@ var dealWords = function(words, forWho="serverChan") {
         "湿度: " + weather.humi + nextLine + 
         "风风: " + weather.windDir + " " + weather.windSpeed + nextLine + 
         "空气质量: " + weather.air + nextLine + 
-        "温馨提示:" + weather.tips + nextLine;
+        "温馨提示:" + weather.tips + nextLine +
+        "<hr/>" + nextLine;
   //添加one
   ret = ret + 
-        "the one: " + one.text + nextLine;
+        "the one: " + one.text + nextLine + 
+        "<hr/>" + nextLine;
   //添加有道每日一句
   ret = ret + 
         "每日一句: " + nextLine +
         "*" + ydWord.english + "*" + nextLine +
         ydWord.chinese + nextLine +
         "出自  《" + ydWord.source + "》" + nextLine +
-        "![配图](" + ydWord.image + ")";
+        "![配图](" + ydWord.image + ")" +
+        "<hr/>" + nextLine;
   return ret;
 }
 
 
 
-var sendMsg = function(sb) {
+var sendMsg = function(sb, words) {
 
   return (
-    Promise.all([getOne(), getWeather(sb.province, sb.city), getYdWord()]).then(()=>{
+    Promise.all([getOne(words), getWeather(sb.province, sb.city, words), getYdWord(words)]).then(()=>{
 
       if(sb.serverChan.isSend == true) {  //如果配置设置了发送server酱
         let str = dealWords(words, "serverChan");   //将格式转换为server酱所需的格式
@@ -149,6 +159,18 @@ var sendMsg = function(sb) {
   )
 }
 
+/*
+ *定时任务
+ *秒 分 时 日 月 周
+*/
+schedule.scheduleJob('00 33 10 * * *', function() {
+  
+  configList.forEach((person)=> {
+    let words = [];
+    words["extraWord"] = person.extraWord; //开头的自定义的话
+    sendMsg(person, words);
+  })
 
-sendMsg(configList.lxq);
+  console.log("======邮件已发送======" + new Date());
+})
 
