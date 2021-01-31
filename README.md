@@ -1,5 +1,15 @@
 # dailyRobot
 爬取墨迹天气、一个、有道词典的每日一句，通过server酱发送给相应的微信，发送邮件给相应的用户。  
+
+---
+#### 更新
+
+重构代码逻辑，减小耦合
+修改体验bug: 有道的每日一句的source有可能会是两个`《《今天的来源》》`
+2021.1.31
+
+---
+
 微信效果图如下：  
 ![微信效果图](https://github.com/LRQLRQ/picture/blob/master/wechatRobotPic.png?raw=true)  
 邮件效果图如下：  
