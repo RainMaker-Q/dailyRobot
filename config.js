@@ -8,11 +8,11 @@
 var configList = [
   {
     province: "beijing",
-    city: "haidian-district",
+    city: "chaoyang-district",
     extraWord: "今天，又是充满希望的一天！",    //在title想说的话
     serverChan: {
       isSend: true,
-      authCode: "SCU69765T7313a13dbabe2d1e7ed0b9aec63b691b5dfb3a8f3e2fb"
+      authCode: "123" // 自己的server酱授权码
     },
     email: {
       isSend: true,
@@ -21,11 +21,11 @@ var configList = [
     }
   },
   {
-    province: "heilongjiang",
-    city: "harbin",
+    province: "beijing",
+    city: "chaoyang-district",
     extraWord: "早上好啊，sweet heart~",
     serverChan: {
-      isSend: false,
+      isSend: true,
       authCode: "123"
     },
     email: {
