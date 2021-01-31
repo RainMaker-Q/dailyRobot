@@ -1,27 +1,24 @@
-const axios = require('axios')        
-const cheerio = require('cheerio')    //作用和jqery一样
-const qs = require('qs')
-const showdown = require('showdown')  //markdown转换为html
-const schedule = require('node-schedule')
+const axios = require('axios');        
+const cheerio = require('cheerio');    //作用和jqery一样
+const qs = require('qs');
+const showdown = require('showdown');  //markdown转换为html
+const schedule = require('node-schedule');
 
-const {configList} = require('./config')
-const {sendEmail} = require('./sendEmail')
+const { configList } = require('./config');
+// const { sendEmail } = require('./sendEmail');
 
 // const words = [];   //爬下来的内容都在里面
 
 //获取"一个"是今天的句子
-var getOne = function(words) {
-  return axios.get("http://wufazhuce.com/")   //one的官网，爬取今天的一句
-  .then(function(res) {
-    let $ = cheerio.load(res.data);
-    var one_text = $('.fp-one-cita a')[0].children[0].data;   //一个的今日一句
-    var one = {
-      desc: "one 今天的句子",
-      text: one_text
-    }
-    words["one"] = one;
-    console.log("一个的今日一句爬取完毕");
-  })
+const getOne = async function() {
+  const res = await axios.get("http://wufazhuce.com/");   //one的官网，爬取今天的一句
+  const $ = cheerio.load(res.data);
+  const one_text = $('.fp-one-cita a')[0].children[0].data;   //一个的今日一句
+  const one = {
+    desc: "one 今天的句子",
+    text: one_text
+  }
+  console.log("一个的今日一句爬取完毕");
 }
 
 //获取今天的天气
@@ -163,14 +160,16 @@ var sendMsg = function(sb, words) {
  *定时任务
  *秒 分 时 日 月 周
 */
-schedule.scheduleJob('00 20 05 * * *', function() {
+// schedule.scheduleJob('00 20 05 * * *', function() {
   
-  configList.forEach((person)=> {
-    let words = [];
-    words["extraWord"] = person.extraWord; //开头的自定义的话
-    sendMsg(person, words);
-  })
+//   configList.forEach((person)=> {
+//     let words = [];
+//     words["extraWord"] = person.extraWord; //开头的自定义的话
+//     sendMsg(person, words);
+//   })
 
-  console.log("======邮件已发送======" + new Date());
-})
+//   console.log("======邮件已发送======" + new Date());
+// })
 
+let res = getOne();
+console.log('res is ', res);
