@@ -17,5 +17,10 @@
     "nodemailer": "^6.4.16",
     "qs": "^6.9.1",
     "showdown": "^1.9.1"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.22.31",
+    "@types/qs": "^6.9.7",
+    "@types/showdown": "^1.9.4"
   }
 }
