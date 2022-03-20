@@ -16,9 +16,9 @@ const send = async function () {
  *定时任务
  *秒 分 时 日 月 周
  */
-// schedule.scheduleJob('00 20 05 * * *', async() => {
-//   await send();
-//   console.log("======信息已发送======" + new Date());
-// })
+schedule.scheduleJob("00 20 05 * * *", async () => {
+  await send();
+  console.log("======信息已发送======" + new Date());
+});
 
-send();
+// send();
