@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "pm2 start ts-node index.ts --name daily --interpreter ./node_modules/.bin/ts-node",
+    "stop": "pm2 stop daily"
   },
   "author": "Rain",
   "license": "ISC",
@@ -15,8 +16,10 @@
     "http-server": "^0.12.0",
     "node-schedule": "^1.3.2",
     "nodemailer": "^6.6.1",
+    "pm2": "^5.2.0",
     "qs": "^6.9.1",
-    "showdown": "^1.9.1"
+    "showdown": "^1.9.1",
+    "ts-node": "^10.7.0"
   },
   "devDependencies": {
     "@types/cheerio": "^0.22.31",
