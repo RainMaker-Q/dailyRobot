@@ -7,12 +7,15 @@ import configList, { IConfig } from "../config";
 
 const MessegeStore = {} as Store;
 
+const genKey = (...rest: string[]) => rest.join("_");
+
 export const getAllMessage = async function () {
   const [one, ydWord] = await Promise.all([getTheOne(), getYdWord()]);
+  const today = new Date().toLocaleDateString();
 
   for (let person of configList) {
     const { province, city } = person;
-    const key = `${province}_${city}`;
+    const key = genKey(province, city, today);
     if (!(key in MessegeStore)) {
       const weather = await getWeather(province, city);
       MessegeStore[key] = weather;
@@ -26,7 +29,8 @@ export const getAllMessage = async function () {
 export const getCustomizedMessage = function (config: IConfig) {
   const messege = {} as IMessege;
   const { province, city, extraWord } = config;
-  const key = `${province}_${city}`;
+  const today = new Date().toLocaleDateString();
+  const key = genKey(province, city, today);
 
   messege["one"] = MessegeStore["one"];
   messege["ydWord"] = MessegeStore["ydWord"];
