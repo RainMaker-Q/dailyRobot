@@ -10,7 +10,7 @@ import formatMessege from "./formatter";
 export const sendServerChan: ISendServerChan = function (person, messege) {
   if (person.serverChan.isSend === true) {
     let str = formatMessege(messege, SEND_TYPE.serverChan); // 将格式转换为server酱所需的格式
-    let url = "https://sc.ftqq.com/" + person.serverChan.authCode + ".send"; // 相应的server酱的配置url
+    let url = "https://sctapi.ftqq.com/" + person.serverChan.authCode + ".send"; // 相应的server酱的配置url
     axios
       .post(
         url, //向绑定微信的手机发送消息
