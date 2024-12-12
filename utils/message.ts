@@ -5,13 +5,14 @@ import getYdWord from "../apis/getYdWord";
 import { IMessage, Store } from "../types/index";
 import configList, { IConfig } from "../config";
 import axios from "axios";
+import getTodayInHistory from "../apis/getTodayInHistory";
 
 const MessageStore = {} as Store;
 
 const genKey = (...rest: string[]) => rest.join("_");
 
 export const getAllMessage = async function () {
-  const [one, ydWord] = await Promise.all([getTheOne(), getYdWord()]);
+  const [one, ydWord, toadyInHistory] = await Promise.all([getTheOne(), getYdWord(), getTodayInHistory()]);
   const today = new Date().toLocaleDateString();
 
   for (let person of configList) {
@@ -24,6 +25,7 @@ export const getAllMessage = async function () {
   }
   MessageStore["one"] = one;
   MessageStore["ydWord"] = ydWord;
+  MessageStore["toadyInHistory"] = toadyInHistory;
   console.log("MessageStore is ", MessageStore);
 };
 
@@ -37,6 +39,7 @@ export const getCustomizedMessage = function (config: IConfig) {
   message["ydWord"] = MessageStore["ydWord"];
   message["weather"] = MessageStore[key];
   message["extraWord"] = extraWord;
+  message["toadyInHistory"] = MessageStore["toadyInHistory"];
   return message;
 };
 

@@ -38,6 +38,7 @@ export type IMessage = {
   one: ITheOneRes;
   ydWord: IYdWordRes;
   extraWord: string;
+  toadyInHistory: string;
 };
 
 export type IFormatMessage = (message: IMessage, sendType: SEND_TYPE) => string;

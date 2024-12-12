@@ -11,3 +11,5 @@ export const genUrl = (province: string, city: string) => {
 
 export const YOUDAO_URL =
   "http://dict.youdao.com/infoline/style/cardList?style=daily&apiversion=3.0&client=mobile";
+
+export const TodayInHistory_Url = 'https://baike.deno.dev/today_in_history';

@@ -13,6 +13,7 @@ const formatMessage: IFormatMessage = function (
   let one = message["one"];
   let ydWord = message["ydWord"];
   let extraWord = message["extraWord"];
+  let toadyInHistory = message["toadyInHistory"];
   let nextLine = "";
 
   let date = new Date();
@@ -53,6 +54,9 @@ const formatMessage: IFormatMessage = function (
   //添加one
   ret = ret + "### " + "the one: " + nextLine + one.text + nextLine;
 
+  // 历史上的今天
+  ret += "### " + "历史上的今天: " + nextLine + toadyInHistory + nextLine;
+
   //添加有道每日一句
   const source = { ydWord };
   const flag_less = ("" + source).indexOf("《");
@@ -75,6 +79,8 @@ const formatMessage: IFormatMessage = function (
     ydWord.image +
     ")" +
     nextLine;
+
+  // console.log('ret is ', ret);
   return ret;
 };
 
