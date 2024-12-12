@@ -1,5 +1,6 @@
 import axios from "axios";
-import cheerio from "cheerio";
+import * as cheerio from "cheerio";
+
 
 import { IGetWeather } from "../types/index";
 import { genUrl } from "../constants";

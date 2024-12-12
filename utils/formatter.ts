@@ -2,17 +2,17 @@
 //返回markdown格式的字符串
 
 import { SEND_TYPE } from "../constants/index";
-import { IFormatMessege } from "../types/index";
+import { IFormatMessage } from "../types/index";
 
-const formatMessege: IFormatMessege = function (
-  messege,
+const formatMessage: IFormatMessage = function (
+  message,
   sendType = SEND_TYPE.serverChan
 ) {
   let ret = "";
-  let weather = messege["weather"];
-  let one = messege["one"];
-  let ydWord = messege["ydWord"];
-  let extraWord = messege["extraWord"];
+  let weather = message["weather"];
+  let one = message["one"];
+  let ydWord = message["ydWord"];
+  let extraWord = message["extraWord"];
   let nextLine = "";
 
   let date = new Date();
@@ -78,4 +78,4 @@ const formatMessege: IFormatMessege = function (
   return ret;
 };
 
-export default formatMessege;
+export default formatMessage;
