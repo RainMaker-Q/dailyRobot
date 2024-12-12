@@ -6,13 +6,13 @@ import {
   getAllMessage,
   getCustomizedMessage,
   updateTodayWords,
-} from "./utils/messege";
+} from "./utils/message";
 
 const send = async function () {
   await getAllMessage();
   for (let person of configList) {
-    const messege = getCustomizedMessage(person);
-    await sendServerChan(person, messege);
+    const message = getCustomizedMessage(person);
+    await sendServerChan(person, message);
   }
   updateTodayWords();
 };

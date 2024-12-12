@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "pm2 start ts-node index.ts --name daily --interpreter ./node_modules/.bin/ts-node",
-    "stop": "pm2 stop daily"
+    "stop": "pm2 stop daily",
+    "test": "./node_modules/.bin/ts-node index.ts"
   },
   "author": "Rain",
   "license": "ISC",

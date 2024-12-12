@@ -33,20 +33,20 @@ export type IGetYdWord = () => Promise<IYdWordRes>;
 
 import { SEND_TYPE } from "../constants/index";
 
-export type IMessege = {
+export type IMessage = {
   weather: IWeatherRes;
   one: ITheOneRes;
   ydWord: IYdWordRes;
   extraWord: string;
 };
 
-export type IFormatMessege = (messege: IMessege, sendType: SEND_TYPE) => string;
+export type IFormatMessage = (message: IMessage, sendType: SEND_TYPE) => string;
 
 import { IConfig } from "../config";
-export type ISendServerChan = (config: IConfig, messege: IMessege) => void;
+export type ISendServerChan = (config: IConfig, message: IMessage) => void;
 
-export type ISendEmailMsg = (config: IConfig, messege: IMessege) => void;
+export type ISendEmailMsg = (config: IConfig, message: IMessage) => void;
 
-export type Store = IMessege & {
+export type Store = IMessage & {
   [key: string]: any;
 };
