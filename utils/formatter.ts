@@ -55,7 +55,7 @@ const formatMessage: IFormatMessage = function (
   ret = ret + "### " + "the one: " + nextLine + one.text + nextLine;
 
   // 历史上的今天
-  ret += "### " + "历史上的今天: " + nextLine + toadyInHistory + nextLine;
+  ret += "### " + "历史上的今天: " + nextLine + toadyInHistory.replaceAll('\n', nextLine) + nextLine;
 
   //添加有道每日一句
   const source = { ydWord };
